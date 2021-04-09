@@ -5,7 +5,7 @@ class Users:
   '''
   users_list = []
 
-  def __init__(self,username, password):
+  def __init__(self,username,login_password):
       '''
       __init__ method helps create new instances of the class.
 
@@ -32,7 +32,7 @@ class Users:
 
 
   @classmethod
-  def user_exists(cls, username, login_password):
+  def user_exists(cls, username,login_password):
       '''
       confirm user details in the users_list to authenticate access
       '''
