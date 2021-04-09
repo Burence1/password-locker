@@ -45,3 +45,16 @@ class Users:
         if username == username and user.login_password == login_password:
           return True
       return False
+
+  @classmethod
+  def search_username(cls, username):
+      '''
+      authorize access by username
+      '''
+      '''
+      Args:
+        username: name used by user to login
+      '''
+      for user in Users.users_list:
+        if user.username == username:
+          return user
