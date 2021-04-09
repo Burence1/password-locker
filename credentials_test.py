@@ -37,10 +37,8 @@ class TestCredentials(unittest.TestCase):
         '''
         self.new_credentials.add_credentials()
         test_credentials = Credentials ("Twitter", "Moringa", "123r")
-        test_credentials = add_credentials()
-
+        test_credentials.add_credentials()
         self.assertEqual(len(Credentials.credentials_list),2)
-
-
+      
 if __name__ == '__main__':
     unittest.main()

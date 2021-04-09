@@ -35,10 +35,9 @@ class Users:
   def user_exists(cls, username,login_password):
       '''
       confirm user details in the users_list to authenticate access
-      '''
-      '''
+  
       Args:
-      ussername: name keyed in by user to login
+      username: name keyed in by user to login
       login_password: password used by user to login
       '''
       for user in Users.users_list:
