@@ -7,7 +7,7 @@ class Users:
 
   def __init__(self,username,login_password):
       '''
-      __init__ method helps create new instances of the class.
+      __init__ method helps create new instances of the Users class.
 
       Args:
            username: new username
