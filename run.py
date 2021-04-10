@@ -76,13 +76,9 @@ def create_password(Length):
 
 def main():
   print("*"*15)
-  print(f"\nbienvenu!!!\nWelcome to Password Locker")
-  print("Enter username")
-  username = input()
-  print(f"\nHey {username} enter your pick")
-
+  print(f"\nBienvenu!!!\nWelcome to Password Locker")
+  print("Enter name")
   while True:
-    print("Enter username")
     new_user = input().strip(' ').capitalize()
     if new_user != '':
       print(f"\nHey {new_user}")
@@ -102,6 +98,7 @@ def main():
                 if len(login_password) >= 7:
                   add_user(create_user(username, login_password))
                   print(f"\nHey, {username}'s account has been created")
+                  print(f"\n Sign in")
                   break
                 else:
                   print("Your password should be more than longer than 7")
@@ -110,7 +107,7 @@ def main():
               print("invalid username!!!")
               continue
             break
-          break
+          
 
         elif short_code == 'SI':
           print("SIGN IN")
@@ -179,8 +176,9 @@ def main():
                   else:
                     print("Invalid application name")
                     continue
+                  break
               elif credentials_logic == 'FC':
-                if len(Credentials.credentials_list) >1:
+                if len(Credentials.credentials_list) >= 1:
                   print("FIND DETAILS")
                   print("Enter Application name to search")
 
@@ -212,10 +210,11 @@ def main():
                       remove_cred = input().upper()
                       if remove_cred == 'Y':
                         remove_credentials(search_app_name(app_name))
-                        print("DELETED")
+                        print(f"{app_name} DELETED")
+                        break
                       elif remove_cred == 'N':  
                         print("Details not deleted")
-                      continue
+                      break
                   else:
                     print(f"\n{app_name}'s details don't exist")
                     continue
@@ -228,6 +227,7 @@ def main():
                   print("All Details")
                   for credential in display_credentials():
                     print(f"\nApplication name: {credential.app_name}")
+                    print(f"\nApplication password: {credential.acc_password}")
                     continue
                 else:
                   print(f"\n you do not have any credentials")
@@ -258,7 +258,7 @@ def main():
               if find_existing_user(username, login_password):
                 while True:
                   remove_user(find_user(username))
-                  print("Accoun deleted")
+                  print("Account deleted")
                   break
               else:
                 print("Invalid account")
