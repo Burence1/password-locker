@@ -68,11 +68,11 @@ def search_app_name(app_name):
   '''
   return Credentials.search_app_name(app_name)
 
-def generate_password():
+def create_password(passwordLength):
   '''
   Function to create a password
   '''
-  return Credentials.create_password()
+  return Credentials.generate_password()
 
 def main():
 
@@ -125,7 +125,7 @@ def main():
             print("Enter your password")
             login_password = input().strip(' ')
 
-            if check_existing_user(username, login_password):
+            if find_existing_user(username, login_password):
               print("\nLog in successful")
               print("What would you like to do?")
 
@@ -166,13 +166,13 @@ def main():
                                 print(" "*4 + "less than 8 characters: WEAK" + "\n" + " "*4 + "8 characters: STRONG" + "\n" + " "*4 + "8-26 characters: VERY STRONG")
                                 while True:
                                   try:
-                                    passwordLength = int(input()
-                                      if passwordLength in range(27):
-                                        acc_password = generate_password(passwordLength)
-                                        print(f"Password generated is {acc_password}")
-                                        add_credentials(create_credentials(app_name, acc_username, acc_password))
-                                        print(f"Account credentials for your {app_name} account have been successfully saved.\n")
-                                        break
+                                    passwordLength = int(input())
+                                    if passwordLength in range(27):
+                                      acc_password = create_password(passwordLength)
+                                      print(f"Password generated is {acc_password}")
+                                      add_credentials(create_credentials(app_name, acc_username, acc_password))
+                                      print(f"Account credentials for your {app_name} account have been successfully saved.\n")
+                                      break
                                   except ValueError:
                                       print("\nYou did not pick a valid password length")
                                       print("Please pick a number between 0-26 and try again")
@@ -183,27 +183,152 @@ def main():
                                 print(" "*4 + "*password must be longer than 6 characters*")
                                 while True:
                                   acc_password = input()
-                                  if len(account_password) >= 6:
+                                  if len(acc_password) >= 6:
                                       add_credentials(create_credentials(app_name, acc_username, acc_password))
                                       print(f"Account credentials for your {app_name} have been successfully saved.\n")
                                       break
-                                    else:
-                                      print("\nThe password you entered is too short.")
-                                      print("Please use a password of 6 characters or more.")
-                                      continue
+                                  else:
+                                    print("\nThe password you entered is too short.")
+                                    print("Please use a password of 6 characters or more.")
+                                    continue
                               else:
                                   print("You did not select a valid option")
                                   print("Please enter (Y/N) and try again")
                                   continue
-                                break
+                              break
 
+                            else:
+                              print("You did not select a valid option")
+                              print("Please enter (Y/N) and try again")
+                            continue
+                              
+                            # break
+                            # break
+                    else:
+                      print("\nSorry, I didn't quite get the application name. Please try again.")
+                    continue
+                elif credentials_navigation == 'FC':
+                          if len(Credentials.credentials_list) >= 1:
+                              print("\nFIND CREDENTIALS")
+                              print("-"*16)
+                              print("Enter the application whose credentials you'd like to find:")
+                              print(" "*4 + "*eg. Instagram*")
+                              searched_application = input().capitalize()
+
+                              if check_existing_credentials(searched_application):
+                                  searched_credential = search_app_name(searched_application)
+                                  print(f"\nApplication name: {searched_credential.app_name}, \n username: {searched_credential.acc_username} \n password: {searched_credential.acc_password}")
+                                  
+                              else:
+                                 print(f"\nThe credentials for {searched_application} don't exist.")
+
+                              continue
+                          else:
+                            print("\nYou don't seem to have any credentials saved.")
+                            continue
+
+                elif credentials_navigation =='DC':
+                        if len(Credentials.credentials_list) >= 1:
+                          print("\nDELETE CREDENTIALS")
+                          print("-"*18)
+                          print("Application name:")
+                          print(" "*4 + "*eg. Twitter*")
+                          app_name=input().capitalize()
+
+                          if check_existing_credentials(app_name):
+                            while True:
+                              print(f"Are you sure you want to delete credentials for your {app_name}? (Y/N)")
+                              delete_credential = input().upper()
+                              if delete_credential == 'Y':
+                                remove_credentials(search_app_name(app_name))
+                                print(f"\nCredentials for {app_name} have been successfully deleted")
+                                break
+                              elif delete_credential == 'N':
+                                print("\nPhew! Your credentials are still intact.")
+                                break
                               else:
                                 print("You did not select a valid option")
-                                print("Please enter (Y/N) and try again")
+                                print("Please enter (Y/N) and try again\n")
                                 continue
-                              break
-                            break
-                          else:
-                            print("\nSorry, I didn't quite get the application name. Please try again.")
-                            continue
-                          
+
+                        else:
+                          print(f"\nCredentials for {app_name} don't exist.")
+                          continue
+                    
+                else:
+                      print("\nYou don't seem to have any credentials saved.")
+                      continue
+                
+            elif  credentials_navigation == 'SC':
+                  if len(Credentials.credentials_list)>=1:
+                    display_credentials
+
+                    print("\nHERE ARE ALL YOUR CREDENTIALS")
+                    print("-"*29)
+                    for credential in display_credentials():
+                      print(f"\nApplication name: {credential.app_name} \n Username: {credential.acc_username} \n Password: {credential.acc_password}")
+                    continue
+                  else:
+                    print("\nYou don't seem to have any credentials saved.")
+                    continue
+            elif credentials_navigation =='LO':
+              print("\nYou have successfully logged out..\n")
+              break
+
+            else:
+                  print("\nYou did not select a valid option.")
+                  print("Please try again.")
+                  continue
+        else:
+              print("\nInvalid username and password")
+              print("Try again or create an account\n")
+              continue
+        
+    elif short_code == 'DA':
+          if len(Users.users_list) >= 1:
+              print("\nDELETE YOUR ACCOUNT")
+              print("-"*19)
+              print("Enter your username")
+              username = input().capitalize()
+              print("Enter your password")
+              login_password = input()
+
+              if find_existing_user(username, login_password):
+                while True:
+                      print(f"Are you sure you want to delete your account? (Y/N)")
+                      delete_account=input().upper()
+                      if delete_account == 'Y':
+                          remove_user(find_user(username))
+                          print(f"\nYour account has been successfully deleted.\n")
+                          break
+                      elif delete_account == 'N':
+                          print("\nPhew! Your account is still active.\n")
+                          break
+                      else:
+                          print("You did not select a valid option")
+                          print("Please enter (Y/N) and try again")
+                          continue
+                else:
+                  print("\nSeems like you do not have an active account or you entered the wrong details.")
+                  print("Please try again.\n")
+                  continue
+              else:
+                  print("\nSorry, there are no active accounts at the moment.\n")
+                  continue
+          elif short_code == 'EX':
+            print("\nAdios!!!....")
+            break
+
+          else:
+            print("\nYou did not select a valid option.")
+            print("Please try again.\n")
+            continue
+
+    else:
+          print("\nSorry, I didn't quite get your name. Please try again")
+          continue
+
+    break
+
+if __name__ == '__main__':
+    main()
