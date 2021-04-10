@@ -47,7 +47,7 @@ class Credentials:
         if credentials.app_name == app_name:
           return credentials
   @classmethod
-  def create_password(cls):
+  def create_password(passwordLength):
       '''
       method that generates passwords randomly
       '''
