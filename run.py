@@ -72,7 +72,8 @@ def create_password(Length):
   '''
   Function to create a password
   '''
-  return Credentials.generate_password(Length)
+  generated_password = Credentials.generate_password()
+  return generated_password
 
 def main():
   print("*"*15)
@@ -149,12 +150,13 @@ def main():
                       elif existing_password == 'N':
                         while True:
                           print(f"\nComputer generated or personal-custom password")
-                          print("(Y/N")
-                          Length = int(input())
+                          print("(Y/N)?")
+                          
                           generated_pass = input().upper()
                           if generated_pass == 'Y':
-                            print("Account password:")
-                            acc_password = create_password(Length)
+                            acc_password = create_password(Length=9)
+                            print(f"generated password is {acc_password}")
+                            add_credentials(create_credentials(app_name, acc_username, acc_password))
                             break
 
                           elif generated_pass == 'N':

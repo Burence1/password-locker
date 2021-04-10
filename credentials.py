@@ -52,8 +52,8 @@ class Credentials:
       method that generates passwords randomly
       '''
 
-      created_password = string.ascii_letters + string.digits
-      generated_password = ''.join((random.choice(created_password) for i in range(Length)))
+      created_password = string.ascii_letters + string.digits + string.punctuation
+      generated_password = ''.join((random.choice(created_password) for i in range(9)))
       return generated_password
 
   @classmethod
