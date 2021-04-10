@@ -53,7 +53,7 @@ class Credentials:
       '''
 
       created_password = string.ascii_letters + string.digits
-      generated_password = ''.join((random.choice(created_password) for i in range(passwordLength)))
+      generated_password = ''.join((random.choice(created_password) for i in range(7)))
       return generated_password
 
   @classmethod
