@@ -68,11 +68,11 @@ def search_app_name(app_name):
   '''
   return Credentials.search_app_name(app_name)
 
-def create_password(passwordLength):
+def create_password(Length):
   '''
   Function to create a password
   '''
-  return Credentials.generate_password()
+  return Credentials.generate_password(Length)
 
 def main():
   print("*"*15)
@@ -104,7 +104,7 @@ def main():
                   print(f"\nHey, {username}'s account has been created")
                   break
                 else:
-                  print("Your password shoul be more than longer than 7")
+                  print("Your password should be more than longer than 7")
                   continue
             else:
               print("invalid username!!!")
@@ -124,6 +124,126 @@ def main():
 
             while True:
               print("\nUse these short codes for navigation: \n CC: create new credentials \n FC: find a credential \n DC: delete a credential \n SC: see all credentials \n LO: log out")
-              
+              credentials_logic = input().upper()
+
+              if credentials_logic == 'CC':
+                print("Create new Details")
+                
+                while True:
+                  print("Application name:")
+                  app_name = input().strip(' ').capitalize()
+
+                  if app_name != '':
+                    print(f"Enter your {app_name}'s username")
+                    acc_username = input()
+
+                    while True:
+                      print(f"\nAlready have an existing password for {app_name}?")
+                      print("(Y/N)")
+                      existing_password = input().upper()
+
+                      if existing_password == 'Y':
+                        print (f"\nEnter current {app_name} password")
+                        acc_password = input()
+                        add_credentials(create_credentials(app_name,acc_username,acc_password))
+                        print(f"\n{app_name}'s details have been saved")
+                        break
+
+                      elif existing_password == 'N':
+                        while True:
+                          print(f"\nComputer generated or personal-custom password")
+                          print("(Y/N")
+                          Length = int(input())
+                          generated_pass = input().upper()
+                          if generated_pass == 'Y':
+                            print("Account password:")
+                            acc_password = create_password(Length)
+                            break
+
+                          elif generated_pass == 'N':
+                            while True:
+                              acc_password= input()
+                              if len(acc_password) >= 7:
+                                add_credentials(create_credentials(app_name, acc_username, acc_password))
+                                print(f"{app_name}'s details successfully saved")
+                                break
+                              else:
+                                print("Password entered is invalid")
+                                continue
+
+                          else:
+                            print("Invalid selection\n Enter (Y/N)")
+                            continue
+                          break
+                        break
+                  else:
+                    print("Invalid application name")
+                    continue
+              elif credentials_logic == 'FC':
+                if len(Credentials.credentials_list) >1:
+                  print("FIND DETAILS")
+                  print("Enter Application name to search")
+
+                  search = input().capitalize()
+
+                  if check_existing_credentials(search):
+                    search_cred = search_app_name(search)
+                    print(f"\nApplication name: {search_cred.app_name}")
+                    print(f"username:{search_cred.acc_username}")
+                    print(f"password: {search_cred.acc_password}")
+
+                  else:
+                    print(f"\n{search_cred.app_name}'s details don't exist")
+
+                  continue
+                else:
+                  print(f"\nSorry no credentials for you")
+
+                continue
+              elif credentials_logic == 'DC':
+                if len(Credentials.credentials_list)>=1:
+                  print("Delete Application details")
+                  print("application name:")
+                  app_name = input().capitalize()
+                  
+                  if check_existing_credentials(app_name):
+                    while True:
+                      print("Delete? \n (Y/N)")
+                      remove_cred = input().upper()
+                      if remove_cred == 'Y':
+                        remove_credentials(search_app_name(app_name))
+                        print("DELETED")
+                      elif remove_cred == 'N':  
+                        print("Details not deleted")
+                      continue
+                  else:
+                    print(f"\n{app_name}'s details don't exist")
+                    continue
+                else:
+                  print("you don't have any details")
+                  continue
+              elif credentials_logic == 'SC':
+                if len(Credentials.credentials_list) >=1:
+                  display_credentials()
+                  print("All Details")
+                  for credential in display_credentials():
+                    print(f"\nApplication name: {credential.app_name}")
+                    continue
+                else:
+                  print(f"\n you do not have any credentials")
+                  continue
+              elif credentials_logic == 'LO':
+                print("\nYou are logged in")
+                break
+              else:
+                print("Invalid selection")
+                continue
+          else:
+            print("Invalid username")
+            continue
+        
+        elif short_code == 'DA':
+          if len(Users.users_list)>=1:
+            print(f"")
 if __name__ == '__main__':
     main()

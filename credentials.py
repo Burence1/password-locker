@@ -47,13 +47,13 @@ class Credentials:
         if credentials.app_name == app_name:
           return credentials
   @classmethod
-  def generate_password(passwordLength):
+  def generate_password(Length):
       '''
       method that generates passwords randomly
       '''
 
       created_password = string.ascii_letters + string.digits
-      generated_password = ''.join((random.choice(created_password) for i in range(7)))
+      generated_password = ''.join((random.choice(created_password) for i in range(Length)))
       return generated_password
 
   @classmethod
