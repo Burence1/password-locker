@@ -244,6 +244,42 @@ def main():
         
         elif short_code == 'DA':
           if len(Users.users_list)>=1:
-            print(f"")
+            print(f"Delete account?")
+            print("(Y/N)")
+            
+            del_acc = input().capitalize()
+
+            if del_acc == 'Y':
+              print("Enter username")
+              username = input().capitalize()
+              print("Enter password")
+              login_password = input()
+
+              if find_existing_user(username, login_password):
+                while True:
+                  remove_user(find_user(username))
+                  print("Accoun deleted")
+                  break
+              else:
+                print("Invalid account")
+                continue
+
+            elif del_acc == 'N':
+              print("Account not deleted")
+              continue
+          else:
+            print("No available users for deleting")
+            continue
+
+        elif short_code == 'EX':
+          print("ADIOS!!!")
+          break
+        else:
+          print("Invalid selection")
+          continue
+    else:
+      print("invalid username, re-enter!")
+      continue
+    
 if __name__ == '__main__':
     main()
