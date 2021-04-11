@@ -52,7 +52,7 @@ class Credentials:
       method that generates passwords randomly
       '''
 
-      created_password = string.ascii_letters + string.digits + string.punctuation
+      created_password = string.ascii_letters + string.digits + string.hexdigits
       generated_password = ''.join((random.choice(created_password) for i in range(9)))
       return generated_password
 

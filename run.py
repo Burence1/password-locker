@@ -14,7 +14,7 @@ def add_user(user):
   '''
   user.add_user()
 
-def remove_user(user):
+def delete_user(user):
   '''
   Function for deleting users
   '''
@@ -45,6 +45,13 @@ def add_credentials(new_credentials):
   '''
   new_credentials.add_credentials()
 
+
+def check_existing_credentials(app_name):
+  '''
+  Function to check for saved credentials
+  '''
+  return Credentials.credentials_exist(app_name)
+
 def remove_credentials(new_credentials):
   '''
   Function for deleting credentials
@@ -56,11 +63,7 @@ def display_credentials():
   Function to display saved credentials
   '''
   return Credentials.display_credentials()
-def check_existing_credentials(app_name):
-  '''
-  Function to check for saved credentials
-  '''
-  return Credentials.credentials_exist(app_name)
+
 
 def search_app_name(app_name):
   '''
@@ -77,14 +80,17 @@ def create_password(Length):
 
 def main():
   print("*"*15)
-  print(f"\nBienvenu!!!\nWelcome to Password Locker")
+  print("\nBienvenu!!!\nWelcome to Password Locker")
+  print(' '*10, "🤖")
+  print("="*26)
   print("Enter name")
   while True:
     new_user = input().strip(' ').capitalize()
     if new_user != '':
-      print(f"\nHey {new_user}")
+      print(f"\nHey {new_user} 🙋")
       while True:
-        print("Use the short codes to navigate the application:  \n CA - create an account \n SI - sign into an existing account \n DA - delete your account \n EX - exit the application")
+        print("Use the short codes to navigate the application: \n si - sign into your account \n ca - create account \n da - delete your account \n ex - exit the application")
+        print("***"*16)
         short_code = input().upper()
 
         if short_code == 'CA':
@@ -93,19 +99,20 @@ def main():
           while True:
             username = input().upper()
             if username.isalpha():
-              print("Enter password")
+              print("Enter password 🔓")
               while True:
                 login_password = input()
                 if len(login_password) >= 7:
                   add_user(create_user(username, login_password))
-                  print(f"\nHey, {username}'s account has been created")
+                  print(f"\nHey, {username}'s account has been created ✔️")
                   print(f"\n Sign in")
                   break
                 else:
-                  print("Your password should be more than longer than 7")
+                  print("\nYour password should be more than longer than 7 🥺")
                   continue
             else:
-              print("invalid username!!!")
+              print("\ninvalid username!!! 😞")
+              print("*"*10)
               continue
             break
           
@@ -118,13 +125,13 @@ def main():
           login_password = input().strip(' ').capitalize()
 
           if find_existing_user(username, login_password):
-            print("LOGIN SUCCESSFUL")
+            print("LOGIN SUCCESSFUL 😊")
 
             while True:
-              print("\nUse these short codes for navigation: \n CC: create new credentials \n FC: find a credential \n DC: delete a credential \n SC: see all credentials \n LO: log out")
+              print("\nUse these short codes for navigation: \n ad: Add new account details \n fd: find an account details by name \n dd: delete account details \n sd: see all saved details \n lo: log out")
               credentials_logic = input().upper()
 
-              if credentials_logic == 'CC':
+              if credentials_logic == 'AD':
                 print("Create new Details")
                 
                 while True:
@@ -144,7 +151,7 @@ def main():
                         print (f"\nEnter current {app_name} password")
                         acc_password = input()
                         add_credentials(create_credentials(app_name,acc_username,acc_password))
-                        print(f"\n{app_name}'s details have been saved")
+                        print(f"\n{app_name}'s details have been saved ✔️")
                         break
 
                       elif existing_password == 'N':
@@ -167,21 +174,21 @@ def main():
                                 print(f"{app_name}'s details successfully saved")
                                 break
                               else:
-                                print("Password entered is invalid")
+                                print("Password entered is invalid ❌")
                                 continue
 
                           else:
-                            print("Invalid selection\n Enter (Y/N)")
+                            print("Invalid selection\n Enter (Y/N) ❌")
                             continue
                           break
                         break
                   else:
-                    print("Invalid application name")
+                    print("Invalid application name ❗")
                     continue
                   break
-              elif credentials_logic == 'FC':
+              elif credentials_logic == 'FD':
                 if len(Credentials.credentials_list) >= 1:
-                  print("FIND DETAILS")
+                  print("FIND DETAILS ⏳")
                   print("Enter Application name to search")
 
                   search = input().capitalize()
@@ -193,14 +200,15 @@ def main():
                     print(f"password: {search_cred.acc_password}")
 
                   else:
-                    print(f"\n{search_cred.app_name}'s details don't exist")
+                    print(f"\nSorry, application details don't exist ❌")
+                    print("--"*15)
 
                   continue
                 else:
-                  print(f"\nSorry no credentials for you")
+                  print(f"\nSorry, no saved credentials ❌")
 
                 continue
-              elif credentials_logic == 'DC':
+              elif credentials_logic == 'DD':
                 if len(Credentials.credentials_list)>=1:
                   print("Delete Application details")
                   print("application name:")
@@ -223,7 +231,7 @@ def main():
                 else:
                   print("you don't have any details")
                   continue
-              elif credentials_logic == 'SC':
+              elif credentials_logic == 'SD':
                 if len(Credentials.credentials_list) >=1:
                   display_credentials()
                   print("All Details")
@@ -232,55 +240,54 @@ def main():
                     print(f"\nApplication password: {credential.acc_password}")
                     continue
                 else:
-                  print(f"\n you do not have any credentials")
+                  print(f"\n you do not have any credentials 🥺")
                   continue
               elif credentials_logic == 'LO':
-                print("\nYou are logged in")
+                print("\nYou are logged out!!")
                 break
               else:
-                print("Invalid selection")
+                print("Invalid selection ❌")
                 continue
           else:
-            print("Invalid username")
+            print("Invalid username ❌")
             continue
         
         elif short_code == 'DA':
-          if len(Users.users_list)>=1:
-            print(f"Delete account?")
-            print("(Y/N)")
+          if len(Users.users_list) >= 1:
+            print("Enter username")
+            username = input().upper()
+
+            if find_user(username):
+              while True:
+                print(f"Delete account?")
+                print("(Y/N)")
+                del_acc = input().upper()
+                if del_acc == 'Y':
+                    delete_user(find_user(username))
+                    print(f"Deleted {username}'s account 😟\n")
+                    break
+                elif del_acc == 'N':
+                    print("Account not deleted")
+                    break
+                else:
+                  print("Invalid selection ❌")
             
-            del_acc = input().capitalize()
+                  continue
+            else:
+              print("Invalid account ❌")
 
-            if del_acc == 'Y':
-              print("Enter username")
-              username = input().capitalize()
-              print("Enter password")
-              login_password = input()
-
-              if find_existing_user(username, login_password):
-                while True:
-                  remove_user(find_user(username))
-                  print("Account deleted")
-                  break
-              else:
-                print("Invalid account")
-                continue
-
-            elif del_acc == 'N':
-              print("Account not deleted")
-              continue
           else:
-            print("No available users for deleting")
+            print("No available users for deleting ❌")
             continue
 
         elif short_code == 'EX':
-          print("ADIOS!!!")
+          print("ADIOS!!! 👋")
           break
         else:
-          print("Invalid selection")
+          print("Invalid selection ❌")
           continue
     else:
-      print("invalid username, re-enter!")
+      print("invalid username, re-enter! ❗")
       continue
     
 if __name__ == '__main__':
