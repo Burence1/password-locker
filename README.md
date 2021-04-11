@@ -8,6 +8,7 @@
 * Change your working directory to the clone location of your preference.
 * Use the git clone command in the terminal to clone the project to the preferred local machine directory.
 * To work on the cloned project, ensure to have any text editors of your choice.}
+
 {Additionally, all the required assets are available in the stated remote repository. All you need is a text editor of your choice}
 
 ## Behaviour Driven Development
@@ -23,7 +24,8 @@
 ## Known Bugs
 {Fortunately, the project has no known bugs and meets all its objectives}
 ## Technologies Used
-{LOOK-Up Git has been developed using a variety of technologies ranging from markup languages to stylesheets and typescript alongside Angular}
+{Password-locker application has been developed using a variety of technologies}
+
 * Python
 * Git
 * Python string emojis
